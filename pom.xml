@@ -16,6 +16,11 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<flyway.url>jdbc:mysql://localhost:3306/jdndc3</flyway.url>
+		<flyway.user>root</flyway.user>
+		<flyway.password>1416</flyway.password>
+		<flyway.schemas>Reviews-db</flyway.schemas>
+		<flyway.locations>filesystem:src/main/resources/db/migration</flyway.locations>
 	</properties>
 
 	<dependencies>
@@ -58,7 +63,7 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>4.0.3</version>
+				<version>6.0.3</version>
 			</plugin>
 		</plugins>
 	</build>

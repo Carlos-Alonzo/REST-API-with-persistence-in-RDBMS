@@ -9,10 +9,22 @@ import java.util.List;
 @Table(name="Products")
 public class Product
 {
-	@OneToMany
+	public Product()	{ createdon = new Date(System.currentTimeMillis());}
+
+	public Product( String brand, String name, String description, String productcode)
+	{
+		this.brand = brand;
+		this.name = name;
+		this.description = description;
+		this.productcode = productcode;
+		this.createdon = new Date(System.currentTimeMillis());
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Review> reviews = new ArrayList<>();
 
 	public List<Review> getReviews() {		return reviews; }
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productId;
@@ -33,27 +45,16 @@ public class Product
 	private Date createdon;
 
 	public String getProductcode()	{ return productcode;	}
-
 	public void setProductcode(String productcode) 	{		this.productcode = productcode; }
-
 	public Date getCreatedon()	{ return createdon;	}
-
 	public void setCreatedon(Date createdon)	{ this.createdon = createdon;	}
-
 	public int getProductId()	{		return productId;	}
-
 	public void setProductId(int productId)	{		this.productId = productId;	}
-
 	public String getBrand()	{		return brand;	}
-
 	public void setBrand(String brand)	{		this.brand = brand; 	}
-
 	public String getName() 	{		return name; 	}
-
 	public void setName(String name) 	{		this.name = name; 	}
-
 	public String getDescription()	{		return description;	}
-
 	public void setDescription(String description) 	{		this.description = description; 	}
 
 }

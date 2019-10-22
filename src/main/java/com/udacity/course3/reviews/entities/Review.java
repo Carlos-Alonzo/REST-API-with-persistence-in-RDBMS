@@ -7,8 +7,18 @@ import java.util.Date;
 @Table(name="Reviews")
 public class Review
 {
+	public Review()	{ reviewdate = new Date(System.currentTimeMillis());}
 
-	@ManyToOne( cascade = CascadeType.REMOVE)
+	public Review(int rating, String title, String comment, String reviewer)
+	{
+		this.rating = rating;
+		this.title = title;
+		this.comment = comment;
+		this.reviewer = reviewer;
+		reviewdate = new Date(System.currentTimeMillis());
+	}
+
+	@ManyToOne
 	private Product product = new Product();
 
 	@Id
