@@ -1,15 +1,16 @@
 package com.udacity.course3.reviews.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Products")
+@Table(name="products")
 public class Product
 {
-	public Product()	{ createdon = new Date(System.currentTimeMillis());}
+	public Product()	{ createdon = new Timestamp(System.currentTimeMillis());}
 
 	public Product( String brand, String name, String description, String productcode)
 	{
@@ -17,17 +18,18 @@ public class Product
 		this.name = name;
 		this.description = description;
 		this.productcode = productcode;
-		this.createdon = new Date(System.currentTimeMillis());
+		this.createdon = new Timestamp(System.currentTimeMillis());
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Review> reviews = new ArrayList<>();
-
-	public List<Review> getReviews() {		return reviews; }
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinColumn(name = "reviewid", nullable = false)
+//	private List<Review> reviews = new ArrayList<>();
+//
+//	public List<Review> getReviews() {		return reviews; }
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int productId;
+	private int productid;
 
 	@Column
 	private String brand;
@@ -42,14 +44,14 @@ public class Product
 	private String productcode;
 
 	@Column
-	private Date createdon;
+	private Timestamp createdon;
 
 	public String getProductcode()	{ return productcode;	}
 	public void setProductcode(String productcode) 	{		this.productcode = productcode; }
 	public Date getCreatedon()	{ return createdon;	}
-	public void setCreatedon(Date createdon)	{ this.createdon = createdon;	}
-	public int getProductId()	{		return productId;	}
-	public void setProductId(int productId)	{		this.productId = productId;	}
+	public void setCreatedon(Timestamp createdon)	{ this.createdon = createdon;	}
+	public int getProductId()	{		return productid;	}
+	public void setProductId(int productId)	{		this.productid = productId;	}
 	public String getBrand()	{		return brand;	}
 	public void setBrand(String brand)	{		this.brand = brand; 	}
 	public String getName() 	{		return name; 	}

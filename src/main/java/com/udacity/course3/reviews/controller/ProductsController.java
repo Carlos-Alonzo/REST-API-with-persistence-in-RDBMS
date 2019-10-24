@@ -1,10 +1,14 @@
 package com.udacity.course3.reviews.controller;
 
+import com.udacity.course3.reviews.entities.Product;
+import com.udacity.course3.reviews.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -14,7 +18,9 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductsController {
 
-    // TODO: Wire JPA repositories here
+    // Wire JPA repositories here
+	@Autowired
+	private ProductRepository productRepository;
 
     /**
      * Creates a product.
@@ -24,8 +30,10 @@ public class ProductsController {
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProduct() {
-        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
+    public void createProduct(@Valid @RequestBody Product product)
+    {
+    	productRepository.save(product);
+//        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -35,8 +43,12 @@ public class ProductsController {
      * @return The product if found, or a 404 not found.
      */
     @RequestMapping(value = "/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
-        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<?> findById(@PathVariable("id") Integer id)
+    {
+	    if(productRepository.findById(id).isPresent())
+		    return new ResponseEntity(productRepository.findById(id), HttpStatus.OK);
+	    else
+	    throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -45,7 +57,5 @@ public class ProductsController {
      * @return The list of products.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<?> listProducts() {
-        throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
-    }
+    public List<?> listProducts()     {    	return productRepository.findAll(); }
 }

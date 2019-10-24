@@ -1,25 +1,27 @@
 package com.udacity.course3.reviews.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name="Reviews")
+@Table(name="reviews")
 public class Review
 {
-	public Review()	{ reviewdate = new Date(System.currentTimeMillis());}
+	public Review()	{ reviewdate = new Timestamp(System.currentTimeMillis());}
 
-	public Review(int rating, String title, String comment, String reviewer)
+	public Review(int rating, String title, String comment, String reviewer, int productid)
 	{
 		this.rating = rating;
 		this.title = title;
 		this.comment = comment;
 		this.reviewer = reviewer;
-		reviewdate = new Date(System.currentTimeMillis());
+		reviewdate = new Timestamp(System.currentTimeMillis());
 	}
 
 	@ManyToOne
-	private Product product = new Product();
+	@JoinColumn(name ="productid", nullable = false)
+	private Product product;// = new Product();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +40,11 @@ public class Review
 	private String reviewer;
 
 	@Column
-	private Date reviewdate;
+	private Timestamp reviewdate;
 
 	public Date getReviewdate() { return reviewdate;	}
 
-	public void setReviewdate(Date reviewdate) 	{		this.reviewdate = reviewdate; }
+	public void setReviewdate(Timestamp reviewdate) 	{		this.reviewdate = reviewdate; }
 
 	public String getTitle() { return title;	}
 
@@ -64,4 +66,23 @@ public class Review
 
 	public void setReviewer(String reviewer) 	{		this.reviewer = reviewer; 	}
 
+	public int getReviewid()
+	{
+		return reviewid;
+	}
+
+	public void setReviewid(int reviewid)
+	{
+		this.reviewid = reviewid;
+	}
+
+	public Product getProduct()
+	{
+		return product;
+	}
+
+	public void setProduct(Product product)
+	{
+		this.product = product;
+	}
 }
